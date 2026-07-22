@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abbaye d'Andecy — Centre culturel et spirituel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:       #C8102E;
+      --red-dark:  #8B0A1E;
+      --red-light: #f3e2e5;
+      --black:     #1A1A1A;
+      --ivory:     #F9F4F0;
+      --grey:      #6B6B6B;
+      --white:     #FFFFFF;
+      --serif:     'Playfair Display', Georgia, serif;
+      --sans:      'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      color: var(--black);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 72px;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,16,46,0.15);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,.08); }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo-mark {
+      width: 36px; height: 36px;
+      background: var(--red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-logo-mark svg { width: 18px; height: 18px; fill: white; }
+    .nav-logo-text {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--black);
+      line-height: 1.2;
+    }
+    .nav-logo-text span {
+      display: block;
+      font-family: var(--sans);
+      font-size: .65rem;
+      font-weight: 400;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .82rem;
+      font-weight: 500;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--grey);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--red); }
+
+    .nav-cta {
+      background: var(--red);
+      color: white !important;
+      padding: 10px 22px;
+      border-radius: 4px;
+      transition: background .2s !important;
+    }
+    .nav-cta:hover { background: var(--red-dark) !important; color: white !important; }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      width: 24px; height: 2px;
+      background: var(--black);
+      display: block;
+      transition: .3s;
+    }
+    .nav-hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .nav-hamburger.open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    .nav-hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Mobile menu overlay */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 72px; left: 0; right: 0; bottom: 0;
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(16px);
+      z-index: 99;
+      flex-direction: column;
+      padding: 40px 32px;
+      gap: 0;
+      overflow-y: auto;
+      transform: translateY(-8px);
+      opacity: 0;
+      transition: opacity .25s ease, transform .25s ease;
+    }
+    .mobile-menu.open {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .mobile-menu a {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--black);
+      text-decoration: none;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(0,0,0,.07);
+      transition: color .2s;
+    }
+    .mobile-menu a:hover { color: var(--red); }
+    .mobile-menu .mobile-cta {
+      margin-top: 32px;
+      background: var(--red);
+      color: white !important;
+      text-align: center;
+      padding: 18px 24px;
+      border-radius: 4px;
+      border-bottom: none;
+      font-family: var(--sans);
+      font-size: .9rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .mobile-menu .mobile-cta:hover { background: var(--red-dark); }
+
+    /* ── HERO ── */
+    .hero {
+      height: 100vh;
+      min-height: 600px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(26,26,26,.55) 0%, rgba(26,26,26,.35) 60%, rgba(26,26,26,.7) 100%),
+        url('https://abbaye-andecy.fr/wp-content/uploads/2025/06/IMG_6272-scaled.jpg') center/cover no-repeat;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+      padding: 0 24px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .7rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.75);
+      margin-bottom: 24px;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--red);
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 700;
+      color: white;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -.01em;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: rgba(255,255,255,.85);
+      font-weight: 400;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: rgba(255,255,255,.8);
+      max-width: 520px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 4px;
+      font-size: .85rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background .2s, transform .2s;
+    }
+    .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+
+    .btn-ghost {
+      border: 1.5px solid rgba(255,255,255,.6);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 4px;
+      font-size: .85rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-ghost:hover { border-color: white; background: rgba(255,255,255,.1); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 2;
+    }
+    .hero-scroll span {
+      font-size: .65rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.5), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: .4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
+    }
+
+    /* ── SECTIONS COMMONS ── */
+    section { padding: 96px 48px; }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .68rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px;
+      height: 2px;
+      background: var(--red);
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--black);
+      margin-bottom: 20px;
+    }
+
+    .section-body {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--grey);
+      max-width: 580px;
+    }
+
+    /* ── BIENVENUE ── */
+    .bienvenue {
+      background: var(--ivory);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      padding: 96px 80px;
+    }
+
+    .bienvenue-text {}
+
+    .bienvenue-text p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--grey);
+      margin-bottom: 16px;
+    }
+    .bienvenue-text p strong { color: var(--black); font-weight: 600; }
+
+    .bienvenue-text .btn-primary {
+      display: inline-block;
+      margin-top: 12px;
+    }
+
+    .bienvenue-image {
+      position: relative;
+    }
+
+    .bienvenue-image img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+    }
+
+    .bienvenue-image::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      width: 120px;
+      height: 120px;
+      border: 3px solid var(--red);
+      border-radius: 2px;
+      z-index: 0;
+    }
+    .bienvenue-image img { position: relative; z-index: 1; }
+
+    /* ── CHIFFRES / STATS ── */
+    .stats {
+      background: var(--red);
+      padding: 72px 80px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      text-align: center;
+    }
+
+    .stat-item {}
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: .8rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.7);
+      font-weight: 500;
+    }
+    .stat-divider {
+      width: 1px;
+      background: rgba(255,255,255,.25);
+      margin: auto;
+    }
+
+    /* ── SERVICES ── */
+    .services {
+      background: white;
+      padding: 96px 80px;
+    }
+    .services-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: end;
+      margin-bottom: 64px;
+    }
+    .services-intro {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--grey);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: #eee;
+      border: 2px solid #eee;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .service-card {
+      background: white;
+      padding: 40px 32px;
+      transition: background .25s;
+      cursor: default;
+    }
+    .service-card:hover { background: var(--ivory); }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--red-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .service-icon svg {
+      width: 22px; height: 22px;
+      fill: var(--red);
+    }
+
+    .service-card h3 {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--black);
+    }
+    .service-card p {
+      font-size: .88rem;
+      line-height: 1.7;
+      color: var(--grey);
+    }
+
+    /* ── GALERIE ── */
+    .galerie {
+      padding: 96px 80px;
+      background: var(--ivory);
+    }
+    .galerie-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .galerie-header .section-label { justify-content: center; }
+    .galerie-header .section-label::before { display: none; }
+    .galerie-header .section-label::after {
+      content: '';
+      width: 24px;
+      height: 2px;
+      background: var(--red);
+    }
+
+    .galerie-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 220px 220px;
+      gap: 8px;
+    }
+
+    .galerie-item {
+      overflow: hidden;
+      border-radius: 3px;
+    }
+    .galerie-item:first-child {
+      grid-column: 1 / 3;
+      grid-row: 1 / 3;
+    }
+    .galerie-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .5s ease;
+    }
+    .galerie-item:hover img { transform: scale(1.04); }
+
+    /* ── ÉVÉNEMENTS ── */
+    .evenements {
+      padding: 96px 80px;
+      background: white;
+    }
+    .evenements-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+    }
+    .evenements-empty {
+      background: var(--ivory);
+      border-left: 3px solid var(--red);
+      padding: 32px 40px;
+      border-radius: 0 4px 4px 0;
+      font-size: .95rem;
+      color: var(--grey);
+      font-style: italic;
+    }
+
+    /* ── LOCALISATION ── */
+    .localisation {
+      background: var(--black);
+      padding: 96px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .localisation .section-title { color: white; }
+    .localisation .section-label { color: rgba(200,16,46,.9); }
+    .localisation .section-label::before { background: var(--red); }
+
+    .contact-list {
+      list-style: none;
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .contact-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .contact-icon {
+      width: 40px; height: 40px;
+      background: rgba(200,16,46,.18);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon svg { width: 16px; height: 16px; fill: var(--red); }
+
+    .contact-info {
+      font-size: .9rem;
+      color: rgba(255,255,255,.6);
+      line-height: 1.6;
+    }
+    .contact-info strong {
+      display: block;
+      color: white;
+      font-weight: 500;
+      font-size: .82rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .contact-info a { color: rgba(255,255,255,.6); text-decoration: none; }
+    .contact-info a:hover { color: var(--red); }
+
+    .map-placeholder {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 4px;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+      color: rgba(255,255,255,.35);
+      font-size: .85rem;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      overflow: hidden;
+      position: relative;
+    }
+    .map-placeholder iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      filter: grayscale(1) contrast(1.1);
+      opacity: .8;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #111;
+      padding: 64px 80px 40px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand {}
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .footer-logo-mark {
+      width: 32px; height: 32px;
+      background: var(--red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .footer-logo-mark svg { width: 16px; height: 16px; fill: white; }
+    .footer-logo-name {
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: white;
+      font-weight: 600;
+    }
+
+    .footer-tagline {
+      font-size: .88rem;
+      color: rgba(255,255,255,.4);
+      line-height: 1.7;
+      max-width: 280px;
+      margin-bottom: 24px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 12px;
+    }
+    .social-link {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,.07);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .social-link:hover { background: var(--red); }
+    .social-link svg { width: 15px; height: 15px; fill: rgba(255,255,255,.7); }
+    .social-link:hover svg { fill: white; }
+
+    .footer-col h4 {
+      font-size: .7rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .footer-col a {
+      font-size: .88rem;
+      color: rgba(255,255,255,.45);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-col a:hover { color: white; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.07);
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy {
+      font-size: .78rem;
+      color: rgba(255,255,255,.25);
+    }
+    .footer-legal {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-legal a {
+      font-size: .78rem;
+      color: rgba(255,255,255,.25);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-legal a:hover { color: rgba(255,255,255,.5); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      section { padding: 64px 24px; }
+
+      .bienvenue, .services-header, .localisation {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 64px 24px;
+      }
+      .bienvenue-image::before { display: none; }
+      .bienvenue-image img { height: 320px; }
+
+      .stats {
+        grid-template-columns: 1fr;
+        padding: 56px 24px;
+        gap: 40px;
+      }
+      .stat-divider { width: 40px; height: 1px; }
+
+      .services { padding: 64px 24px; }
+      .services-grid { grid-template-columns: 1fr; }
+
+      .galerie { padding: 64px 24px; }
+      .galerie-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(3, 180px);
+      }
+      .galerie-item:first-child {
+        grid-column: 1 / 3;
+        grid-row: 1 / 2;
+      }
+
+      .evenements { padding: 64px 24px; }
+      .evenements-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+
+      footer { padding: 56px 24px 32px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+
+      .hero-scroll { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 3a2 2 0 110 4 2 2 0 010-4zm0 14.5c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+      </div>
+      <div class="nav-logo-text">
+        Abbaye d'Andecy
+        <span>Champagne · Chrétiens d'Orient</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#bienvenue">Présentation</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#galerie">Photothèque</a></li>
+      <li><a href="#evenements">Événements</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="https://secure.oeuvre-orient.fr/soutenir" class="nav-cta">Soutenir</a></li>
+    </ul>
+
+    <button class="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#bienvenue" class="mobile-link">Présentation</a>
+    <a href="#services" class="mobile-link">Services</a>
+    <a href="#galerie" class="mobile-link">Photothèque</a>
+    <a href="#evenements" class="mobile-link">Événements</a>
+    <a href="#contact" class="mobile-link">Contact</a>
+    <a href="https://secure.oeuvre-orient.fr/soutenir" class="mobile-cta">Soutenir l'Œuvre</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Champagne · Baye · Marne</div>
+      <h1>Abbaye<br><em>Notre-Dame de Vive-Fontaine</em></h1>
+      <p class="hero-sub">Centre culturel et spirituel pour les chrétiens d'Orient, niché au cœur des coteaux champenois depuis le XVIIIe siècle.</p>
+      <div class="hero-actions">
+        <a href="#bienvenue" class="btn-primary">Découvrir l'abbaye</a>
+        <a href="#evenements" class="btn-ghost">Voir les événements</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Défiler</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-num">XVIII<sup style="font-size:1.5rem">e</sup></div>
+      <div class="stat-label">Siècle — Bâtiments historiques</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-num">365</div>
+      <div class="stat-label">Jours d'accueil par an</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-num">1</div>
+      <div class="stat-label">Chapelle bioclimatique unique</div>
+    </div>
+  </div>
+
+  <!-- BIENVENUE -->
+  <section class="bienvenue" id="bienvenue">
+    <div class="bienvenue-text">
+      <div class="section-label">Bienvenue</div>
+      <h2 class="section-title">Un lieu de ressourcement au cœur de la Champagne</h2>
+      <p>Notre-Dame de Vive-Fontaine d'Andecy a été confiée à l'<strong>Œuvre d'Orient</strong> par le <strong>diocèse de Châlons</strong>. Elle propose tout au long de l'année des <strong>événements culturels et spirituels</strong> en lien avec les chrétiens d'Orient.</p>
+      <p>Elle vous accueille également pour des retraites, récollections, CEP scouts, étapes de Saint-Jacques et bien plus encore.</p>
+      <p>Avec son cadre de vie unique au milieu des coteaux champenois, ses <strong>bâtiments du XVIIIe siècle</strong>, ses jardins et sa <strong>chapelle bioclimatique</strong>, l'abbaye permet à chacun de se ressourcer le temps d'une journée, d'un week-end ou d'une semaine.</p>
+      <a href="https://abbaye-andecy.fr/a-propos/" class="btn-primary">En savoir plus</a>
+    </div>
+    <div class="bienvenue-image">
+      <img src="https://abbaye-andecy.fr/wp-content/uploads/2025/06/IMG_6586-scaled.jpg" alt="L'abbaye d'Andecy" />
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="services-header">
+      <div>
+        <div class="section-label">Nos services</div>
+        <h2 class="section-title">Ce que l'abbaye vous propose</h2>
+      </div>
+      <p class="services-intro">Chaque séjour à Andecy est une invitation au silence, à la réflexion et à la rencontre, dans un cadre préservé et accueillant.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
+        </div>
+        <h3>Retraites spirituelles</h3>
+        <p>Des temps de silence et de prière dans un cadre propice à l'intériorité, encadrés ou libres.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+        </div>
+        <h3>Événements culturels</h3>
+        <p>Rencontres, conférences et célébrations liées à la richesse des chrétiens d'Orient tout au long de l'année.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+        <h3>Étape pèlerinage</h3>
+        <p>Accueil des marcheurs de Saint-Jacques-de-Compostelle dans un lieu de pause et de recueillement.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        </div>
+        <h3>Séjours scouts CEP</h3>
+        <p>Cadre idéal pour les camps et rassemblements de jeunesse dans la tradition scoute.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+        </div>
+        <h3>Concerts & liturgie</h3>
+        <p>La chapelle bioclimatique accueille concerts de musique sacrée et célébrations liturgiques orientales.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z"/></svg>
+        </div>
+        <h3>Hébergement</h3>
+        <p>Des chambres simples et accueillantes pour les séjours d'une nuit à plusieurs jours dans la communauté.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIE -->
+  <section class="galerie" id="galerie">
+    <div class="galerie-header">
+      <div class="section-label">Photothèque</div>
+      <h2 class="section-title">Découvrir l'abbaye en images</h2>
+    </div>
+    <div class="galerie-grid">
+      <div class="galerie-item">
+        <img src="https://abbaye-andecy.fr/wp-content/uploads/2025/06/IMG_6272-scaled.jpg" alt="Abbaye d'Andecy" loading="lazy" />
+      </div>
+      <div class="galerie-item">
+        <img src="https://abbaye-andecy.fr/wp-content/uploads/2025/06/IMG_6575-scaled.jpg" alt="Chapelle" loading="lazy" />
+      </div>
+      <div class="galerie-item">
+        <img src="https://abbaye-andecy.fr/wp-content/uploads/2025/06/IMG_6318-scaled.jpg" alt="Jardins" loading="lazy" />
+      </div>
+      <div class="galerie-item">
+        <img src="https://abbaye-andecy.fr/wp-content/uploads/2025/06/IMG_6621-scaled.jpg" alt="Bâtiment" loading="lazy" />
+      </div>
+      <div class="galerie-item">
+        <img src="https://abbaye-andecy.fr/wp-content/uploads/2025/04/Week-end-anciens-volontaires-Andecy-juin-2024-4-scaled.jpg" alt="Week-end volontaires" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENEMENTS -->
+  <section class="evenements" id="evenements">
+    <div class="evenements-header">
+      <div>
+        <div class="section-label">Agenda</div>
+        <h2 class="section-title">Prochains événements</h2>
+      </div>
+      <a href="https://abbaye-andecy.fr/https-abbaye-andecy-fr-evenements/" class="btn-primary">Voir tout l'agenda</a>
+    </div>
+    <div class="evenements-empty">
+      Il n'y a pas d'événements à venir pour le moment. Revenez bientôt ou suivez-nous sur les réseaux sociaux pour ne rien manquer.
+    </div>
+  </section>
+
+  <!-- CONTACT / LOCALISATION -->
+  <section class="localisation" id="contact">
+    <div>
+      <div class="section-label">Nous trouver</div>
+      <h2 class="section-title">Infos pratiques</h2>
+
+      <ul class="contact-list">
+        <li>
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          </div>
+          <div class="contact-info">
+            <strong>Adresse</strong>
+            Andecy — 51270 Baye, Champagne
+          </div>
+        </li>
+        <li>
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          </div>
+          <div class="contact-info">
+            <strong>Téléphone</strong>
+            <a href="tel:+33759623314">07 59 62 33 14</a>
+          </div>
+        </li>
+        <li>
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </div>
+          <div class="contact-info">
+            <strong>Email</strong>
+            <a href="mailto:andecy@oeuvre-orient.fr">andecy@oeuvre-orient.fr</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="map-placeholder">
+      <iframe
+        src="https://www.openstreetmap.org/export/embed.html?bbox=3.8,48.85,3.95,48.93&layer=mapnik&marker=48.89,3.875"
+        title="Carte Abbaye d'Andecy"
+        loading="lazy"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="footer-logo-mark">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 3a2 2 0 110 4 2 2 0 010-4zm0 14.5c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+          </div>
+          <div class="footer-logo-name">Abbaye d'Andecy</div>
+        </div>
+        <p class="footer-tagline">Centre culturel et spirituel pour les chrétiens d'Orient, en Champagne. Confiée à l'Œuvre d'Orient par le diocèse de Châlons.</p>
+        <div class="social-links">
+          <a href="https://www.facebook.com/profile.php?id=61577186383470" class="social-link" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="https://youtube.com/@uvredorient9322" class="social-link" aria-label="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#bienvenue">Présentation</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#galerie">Photothèque</a></li>
+          <li><a href="#evenements">Événements</a></li>
+          <li><a href="https://abbaye-andecy.fr/presse/">Presse</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>L'Œuvre d'Orient</h4>
+        <ul>
+          <li><a href="https://secure.oeuvre-orient.fr/soutenir">Soutenir l'Œuvre</a></li>
+          <li><a href="https://abbaye-andecy.fr/contacts/">Nos contacts</a></li>
+          <li><a href="https://abbaye-andecy.fr/?page_id=98">Mentions légales</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Abbaye d'Andecy — Œuvre d'Orient. Tous droits réservés.</p>
+      <div class="footer-legal">
+        <a href="https://abbaye-andecy.fr/?page_id=98">Mentions légales</a>
+        <a href="https://abbaye-andecy.fr/contacts/">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Hamburger menu
+    const hamburger = document.querySelector('.nav-hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    // Fermer le menu au clic sur un lien
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Smooth anchor scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
